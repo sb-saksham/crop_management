@@ -1,0 +1,17 @@
+{% url 'crop_stats:graph' as graph %}
+{% url 'crop_stats:home' as home %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">CropManagement</a>
+        <div class="nav" id="navbarContent">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == home %}active{% endif %}" href="{% url 'crop_stats:home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == graph %}active{% endif %}" href="{% url 'crop_stats:graph' %}">Graphs</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id="container" style="width:75%;margin:auto;">
+        <div class="row">
+            <div class="col-12">
+                <h5>Temperature and Humidity's Relation to Crop Health</h5>
+                <br>
+                <canvas id="temperature-chart"></canvas>
+            </div>
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12">
+                <h5>Sunlight and Crop health's Relation</h5>
+                <br>
+                <canvas id="sun-chart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block script %}
+<script>
+    window.onload = () => {
+      var temp_ctx = document.getElementById('temperature-chart').getContext('2d');
+      var sun_ctx = document.getElementById('sun-chart').getContext('2d');
+      window.tempLine = new Chart(temp_ctx, {
+          type: 'line',
+          data: {
+            datasets: [
+                {
+                    data: {{ temperature|safe }},
+                    label: 'Crop-Health To Temperature',
+                    borderColor: '#FF0000',
+
+                },
+                {
+                    data: {{ humidity|safe }},
+                    label: 'Crop-Health To Humidity',
+                    borderColor: '#34A56F',
+                },
+            ],
+            labels: {{ crop_health|safe }},
+            fill:false,
+          },
+          options: {
+            responsive: true,
+            scales:{
+                y: {
+                    title: {
+                        display:true,
+                        text:'Temp/Humidity Value'
+                    },
+                    min:0,
+                    max:100,
+                    ticks:{
+                        stepSize: 10,
+                    }
+                },
+                x: {
+                    title: {
+                        display:true,
+                        text:'Crop Health Index',
+                    },
+                }
+            }
+          }
+      });
+      window.sunLine = new Chart(sun_ctx, {
+          type: 'line',
+          data: {
+            datasets: [
+                {
+                    data: {{ sunlight|safe }},
+                    label: 'Crop-Health To Sunlight',
+                    borderColor: '#FF0000',
+                },
+            ],
+            labels: {{ crop_health|safe }},
+            fill:false,
+          },
+          options: {
+            responsive: true,
+            scales:{
+                y: {
+                    title: {
+                        display:true,
+                        text:'Sunlight Value'
+                    },
+<!--                    min:0,-->
+<!--                    max:100,-->
+<!--                    ticks:{-->
+<!--                        stepSize: 10,-->
+<!--                    }-->
+                },
+                x: {
+                    title: {
+                        display:true,
+                        text:'Crop Health Index',
+                    },
+                }
+            }
+          }
+      });
+    };
+    </script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid m-3">
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Sr. No.</th>
+          <th scope="col">Time</th>
+          <th scope="col">Humidity</th>
+          <th scope="col">Temperature</th>
+          <th scope="col">Sunlight</th>
+          <th scope="col">Crop Health</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stat_obj in stat_objs %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ stat_obj.time }}</td>
+              <td>{{ stat_obj.humidity }}</td>
+              <td>{{ stat_obj.temperature }}</td>
+              <td>{{ stat_obj.sunlight }}</td>
+              <td class="
+              {% if stat_obj.crop_health <= 3 %}
+                bg-danger
+              {% elif stat_obj.crop_health > 3 and stat_obj.crop_health < 7 %}
+                bg-primary
+              {% elif stat_obj.crop_health > 7 and stat_obj.crop_health <= 10 %}
+                bg-success
+              {% endif %}">
+              {% if stat_obj.crop_health <= 3 %}
+                Worse than Before
+              {% elif stat_obj.crop_health > 3 and stat_obj.crop_health < 7 %}
+                Same as Before
+              {% elif stat_obj.crop_health > 7 and stat_obj.crop_health <= 10 %}
+                Better than Before
+              {% endif %}
+              </td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+{% endblock %}
