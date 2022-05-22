@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # user-apps
     'crop_stats',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
