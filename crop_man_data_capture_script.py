@@ -39,12 +39,22 @@ headers = {
 localhost_url = "http://127.0.0.1:8000"
 production_host_url = "https://cropmanagement.pythonanywhere.com/"
 endpoint = production_host_url+"/api/"
+humidity = int((sum(humidity)/len(humidity)))
+temperature = int((sum(temperature)/len(temperature)))
+sunlight = int((sum(sunlight)/len(sunlight)))
 data = {
     'humidity': int((sum(humidity)/len(humidity))),
     'temperature': int((sum(temperature)/len(temperature))),
     'sunlight': int((sum(sunlight)/len(sunlight))),
 }
-crop_health = input("Enter the Current Crop Health(on a scale of 1 to 10; 1 is worse than before 10 is better than before): ")
+humidity_is_ok = humidity >= 45 and humidity <=65
+temperature_is_ok = temperature >= 25 and temperature <= 45
+sunlight_is_ok = sunlight >= 900 and sunlight <= 1100
+crop_health = 5
+if humidity_is_ok and temperature_is_ok and sunlight_is_ok:
+    crop_health = 9
+else:
+    crop_health = 3
 data['crop_health'] = crop_health
 r = requests.post(endpoint, data=json.dumps(data), headers=headers)
 print(r.json())
